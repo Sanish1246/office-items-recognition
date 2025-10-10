@@ -1,10 +1,33 @@
 import React from "react";
 import { useState } from "react";
-import { Button } from "./button";
+import { Button } from "./ui/button";
 import { BrainCircuit } from "lucide-react";
+import { toast } from "sonner";
 
 const UploadFile = () => {
   const [selectedImage, setSelectedImage] = useState(null);
+
+  function analyzeImg() {
+    if (!selectedImage) {
+      toast.error("Image analyzed successfully!", {
+        action: {
+          label: "Close",
+          onClick: () => {
+            toast.dismiss();
+          },
+        },
+      });
+    } else {
+      toast.success("Image analyzed successfully!", {
+        action: {
+          label: "Close",
+          onClick: () => {
+            toast.dismiss();
+          },
+        },
+      });
+    }
+  }
   return (
     <div className="mt-5">
       <div className="border-1 h-108 w-200 border-red-500 mx-auto items-center">
@@ -42,7 +65,12 @@ const UploadFile = () => {
   "
           />
         </label>
-        <Button>
+        <Button
+          onClick={() => {
+            console.log("button clicked");
+            analyzeImg();
+          }}
+        >
           <BrainCircuit />
           Analyze
         </Button>
