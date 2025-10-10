@@ -10,9 +10,9 @@ function App() {
 
   return (
     <>
-      <div className="w-screen text-center border-1 mx-auto">
+      <div className="w-screen text-center mx-auto">
         <h1 className="mt-5 text-2xl font-bold">Office Items Recognition</h1>
-        <p className="mt-5">Choose an option</p>
+        <p className="mt-5">Choose an input method</p>
         <div className="flex flex-row justify-center mt-3 gap-3">
           <Button onClick={() => setChoice("Upload")}>
             <Upload />
