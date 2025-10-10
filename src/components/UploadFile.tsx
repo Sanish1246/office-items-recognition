@@ -4,8 +4,11 @@ import { BrainCircuit } from "lucide-react";
 import { toast } from "sonner";
 
 const UploadFile = () => {
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+
   const [isLoading, setIsLoading] = useState(false);
+
+  const [result, setResult] = useState({ item: "", confidence: 0 });
 
   function analyzeImg() {
     if (!selectedImage) {
@@ -21,6 +24,7 @@ const UploadFile = () => {
       setIsLoading(true);
       setTimeout(() => {
         setIsLoading(false);
+        setResult({ item: "Chair", confidence: 100 });
         toast.success("Image analyzed successfully!", {
           action: {
             label: "Close",
@@ -37,7 +41,13 @@ const UploadFile = () => {
       <div className="border-1 h-108 w-200 border-indigo-700 mx-auto items-center">
         {selectedImage ? (
           isLoading ? (
-            <p>Loading</p>
+            <div className="flex-center items-center justify-center  h-full w-full overflow-hidden bg-violet-50">
+              <div className="three-body">
+                <div className="three-body__dot" />
+                <div className="three-body__dot" />
+                <div className="three-body__dot" />
+              </div>
+            </div>
           ) : (
             <img
               src={URL.createObjectURL(selectedImage)}
@@ -67,7 +77,14 @@ const UploadFile = () => {
         )}
       </div>
       <p className="mt-2">
-        <b>Item:</b> Chair - <b>Confidence:</b>100%
+        {result.item ? (
+          <p>
+            <b>Item:</b> {result.item} - <b>Confidence:</b>
+            {result.confidence}%
+          </p>
+        ) : (
+          <p>Upload an image to be anlayzed</p>
+        )}
       </p>
       <div className="flex flex-row mt-3 justify-center items-center gap-3">
         <label>
@@ -75,9 +92,11 @@ const UploadFile = () => {
             type="file"
             name="office-image"
             accept="image/*"
-            onChange={(event) => {
-              if (event.target.files[0]) {
-                setSelectedImage(event.target.files[0]);
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              const file = event.currentTarget.files?.[0]; //
+              if (file) {
+                setSelectedImage(file);
+                setResult({ item: "", confidence: 0 });
               }
             }}
             className="
