@@ -57,9 +57,9 @@ const UploadFile = () => {
         ) : (
           <div
             role="status"
-            className=" h-full w-full  rtl:space-x-reverse md:flex md:items-center"
+            className="h-full w-full rtl:space-x-reverse md:flex md:items-center"
           >
-            <div className="flex items-center justify-center w-full h-full bg-gray-300   dark:bg-gray-700 flex-1">
+            <div className="flex  items-center justify-center w-full h-full bg-gray-300 dark:bg-gray-700 flex-1">
               <svg
                 className="w-10 h-10 text-gray-200 dark:text-gray-600"
                 aria-hidden="true"
@@ -75,18 +75,18 @@ const UploadFile = () => {
           </div>
         )}
       </div>
-      <p className="mt-2">
-        {isLoading ? (
-          <p>Loading...</p>
-        ) : result.item === "" ? (
-          <p>Upload an image to be anlayzed</p>
-        ) : (
-          <p>
-            <b>Item:</b> {result.item} - <b>Confidence:</b>
-            {result.confidence}%
-          </p>
-        )}
-      </p>
+
+      {isLoading ? (
+        <p className="mt-2">Analysis in progress...</p>
+      ) : result.item === "" ? (
+        <p className="mt-2">Upload an image to be anlayzed</p>
+      ) : (
+        <p className="mt-2">
+          <b>Item:</b> {result.item} - <b>Confidence:</b>
+          {result.confidence}%
+        </p>
+      )}
+
       <div className="flex flex-row mt-3 justify-center items-center gap-3">
         <label>
           <input

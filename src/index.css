@@ -110,6 +110,7 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+/* Styling for the spinner */
 .three-body {
   --uib-size: 35px;
   --uib-speed: 0.8s;
