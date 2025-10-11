@@ -1,10 +1,37 @@
 import { useState } from "react";
-import "./App.css";
+import { Button } from "@/components/ui/button";
+import { Upload, Camera } from "lucide-react";
+import { Toaster } from "@/components/ui/sonner";
+import UploadFile from "./components/UploadFile";
+import WebcamFeed from "./components/WebcamFeed";
 
 function App() {
+  const [choice, setChoice] = useState("Upload");
+
   return (
     <>
-      <h1>Test</h1>
+      <div className="w-screen text-center mx-auto">
+        <h1 className="mt-3 text-2xl font-bold">Office Items Recognition</h1>
+        <p className="mt-5">Choose an input method</p>
+        <div className="flex flex-row justify-center mt-3 gap-3">
+          <Button
+            variant={choice == "Upload" ? "outline" : "default"}
+            onClick={() => setChoice("Upload")}
+          >
+            <Upload />
+            Upload
+          </Button>
+          <Button
+            variant={choice == "Webcam" ? "outline" : "default"}
+            onClick={() => setChoice("Webcam")}
+          >
+            <Camera />
+            Webcam
+          </Button>
+        </div>
+        <div>{choice == "Upload" ? <UploadFile /> : <WebcamFeed />}</div>
+        <Toaster richColors />
+      </div>
     </>
   );
 }
