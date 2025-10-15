@@ -13,6 +13,7 @@ const WebcamFeed = () => {
   };
 
   useEffect(() => {
+    //Adding mock timeout to simulate intended behaviour
     const timer = setTimeout(() => {
       setResult({ item: "Chair", confidence: 100 });
       toast.success("Object found!", {

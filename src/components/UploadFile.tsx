@@ -21,6 +21,7 @@ const UploadFile = () => {
         },
       });
     } else {
+      
       setIsLoading(true);
       setTimeout(() => {
         setIsLoading(false);

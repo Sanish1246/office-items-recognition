@@ -222,6 +222,6 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-[url('office-bg.gif')] bg-fixed bg-cover bg-center bg-no-repeat text-foreground;
   }
 }
