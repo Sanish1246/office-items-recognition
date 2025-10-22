@@ -8,9 +8,9 @@ const UploadFile = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const [result, setResult] = useState({ item: "", confidence: 0 });
+  const [result, setResult] = useState({ item: "" });
 
-  function analyzeImg() {
+  async function analyzeImg() {
     if (!selectedImage) {
       toast.error("You should upload an image first!", {
         action: {
@@ -20,21 +20,66 @@ const UploadFile = () => {
           },
         },
       });
-    } else {
-      
-      setIsLoading(true);
-      setTimeout(() => {
-        setIsLoading(false);
-        setResult({ item: "Chair", confidence: 100 });
-        toast.success("Image analyzed successfully!", {
-          action: {
-            label: "Close",
-            onClick: () => {
-              toast.dismiss();
-            },
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const form = new FormData();
+      // il backend si aspetta il campo "classification_file"
+      form.append("classification_file", selectedImage);
+
+      const res = await fetch("http://localhost:8000/api/classification", {
+        method: "POST",
+        body: form,
+      });
+
+      if (!res.ok) {
+        throw new Error(`Server returned ${res.status}`);
+      }
+
+      const data = await res.json();
+
+      const firstResult = data?.results?.[0] ?? null;
+
+      if (!firstResult || Object.keys(firstResult).length === 0) {
+        throw new Error("No classification results");
+      }
+
+      // Using the class with max prob as the identified class
+      const entries = Object.entries(firstResult) as [string, number][];
+      const [bestClass, bestProb] = entries.reduce((a, b) =>
+        a[1] > b[1] ? a : b
+      );
+
+      // let confidence =
+      //   typeof bestProb === "number" ? bestProb : parseFloat(String(bestProb));
+      // if (confidence <= 1) confidence = Math.round(confidence * 100);
+      // else confidence = Math.round(confidence);
+
+      setResult({ item: bestClass });
+      toast.success("Image analyzed successfully!", {
+        action: {
+          label: "Close",
+          onClick: () => {
+            toast.dismiss();
           },
-        });
-      }, 2000);
+        },
+      });
+    } catch (err) {
+      console.error(err);
+      toast.error("Analysis failed. See console for details.", {
+        action: {
+          label: "Close",
+          onClick: () => {
+            toast.dismiss();
+          },
+        },
+      });
+      setResult({ item: "" });
+    } finally {
+      setIsLoading(false);
     }
   }
   return (
@@ -83,8 +128,7 @@ const UploadFile = () => {
         <p className="mt-2">Upload an image to be anlayzed</p>
       ) : (
         <p className="mt-2">
-          <b>Item:</b> {result.item} - <b>Confidence:</b>
-          {result.confidence}%
+          <b>Item:</b> {result.item}
         </p>
       )}
 
@@ -98,7 +142,7 @@ const UploadFile = () => {
               const file = event.currentTarget.files?.[0]; //
               if (file) {
                 setSelectedImage(file);
-                setResult({ item: "", confidence: 0 });
+                setResult({ item: "" });
               }
             }}
             className="
