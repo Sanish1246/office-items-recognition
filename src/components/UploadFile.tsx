@@ -27,7 +27,6 @@ const UploadFile = () => {
 
     try {
       const form = new FormData();
-      // il backend si aspetta il campo "classification_file"
       form.append("classification_file", selectedImage);
 
       const res = await fetch("http://localhost:8000/api/classification", {
