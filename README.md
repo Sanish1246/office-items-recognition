@@ -1,5 +1,3 @@
-## Getting Started
-
 ## Installing dependencies
 
 In order to install all dependencies for the model, run the following command:
@@ -14,7 +12,7 @@ Then, run the following command to install all the dependencies for the front-en
 npm install
 ```
 
-### Starting the application
+## Starting the application
 
 Move to the office-items-classification folder
 
@@ -40,7 +38,7 @@ Now, open another another terminal and type the following command to start the V
 npm run dev
 ```
 
-### Accessing the application
+## Accessing the application
 
 If everything has been done correctly, the application should be available at this url
 
