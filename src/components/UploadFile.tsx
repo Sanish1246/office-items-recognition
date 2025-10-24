@@ -48,9 +48,10 @@ const UploadFile = () => {
 
       // Using the class with max prob as the identified class
       const entries = Object.entries(firstResult) as [string, number][];
-      const [bestClass, bestProb] = entries.reduce((a, b) =>
+      let [bestClass, bestProb] = entries.reduce((a, b) =>
         a[1] > b[1] ? a : b
       );
+      bestClass = bestClass.charAt(0).toUpperCase() + bestClass.slice(1);
 
       // let confidence =
       //   typeof bestProb === "number" ? bestProb : parseFloat(String(bestProb));
@@ -162,7 +163,7 @@ const UploadFile = () => {
           }}
         >
           <BrainCircuit />
-          Analyze
+          Classify
         </Button>
       </div>
     </div>
