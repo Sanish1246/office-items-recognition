@@ -96,7 +96,7 @@ const UploadFile = () => {
           ) : (
             <img
               src={URL.createObjectURL(selectedImage)}
-              className="h-108 w-full object-fit"
+              className="h-108 w-full object-contain"
             />
           )
         ) : (
