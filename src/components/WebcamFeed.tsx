@@ -1,6 +1,8 @@
 import { useRef, useEffect, useState } from "react";
 import Webcam from "react-webcam";
+import { Button } from "./ui/button";
 import { toast } from "sonner";
+import { Camera } from "lucide-react";
 
 const WebcamFeed = () => {
   const [result, setResult] = useState({ item: "", confidence: 0 });
@@ -49,9 +51,11 @@ const WebcamFeed = () => {
 
       // Get class with highest probability
       const entries = Object.entries(firstResult) as [string, number][];
-      const [bestClass, bestProb] = entries.reduce((a, b) =>
+      let [bestClass, bestProb] = entries.reduce((a, b) =>
         a[1] > b[1] ? a : b
       );
+
+      bestClass = bestClass.charAt(0).toUpperCase() + bestClass.slice(1);
 
       setResult({ item: bestClass, confidence: Math.round(bestProb * 100) });
       toast.success("Object detected!", {
@@ -73,16 +77,6 @@ const WebcamFeed = () => {
     }
   }
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (!isAnalyzing) {
-        analyzeFrame();
-      }
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, [isAnalyzing]);
-
   return (
     <div className="camView mt-3">
       <Webcam
@@ -101,6 +95,14 @@ const WebcamFeed = () => {
           <b>Item:</b> {result.item}
         </p>
       )}
+      <Button
+        onClick={() => {
+          analyzeFrame();
+        }}
+      >
+        <Camera />
+        Capture
+      </Button>
     </div>
   );
 };
