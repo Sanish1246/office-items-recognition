@@ -1,0 +1,13 @@
+# YOLOv8 Classification Dataset Config
+path: data/split
+train: train
+val: val
+test: test
+
+names:
+  0: ballpoint
+  1: binder
+  2: files
+  3: headphone
+  4: mouse
+  5: mug
