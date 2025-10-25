@@ -5,9 +5,9 @@ val: val
 test: test
 
 names:
-  0: binder
-  1: files
-  2: headphone
-  3: monitor
-  4: mug
-  5: printer
+  0: ballpoint
+  1: binder
+  2: files
+  3: headphone
+  4: mouse
+  5: mug

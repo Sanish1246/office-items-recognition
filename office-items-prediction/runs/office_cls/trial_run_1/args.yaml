@@ -1,6 +1,6 @@
 task: classify
 mode: train
-model: yolov8n-cls.pt
+model: yolov8m-cls.pt
 data: data/split
 epochs: 15
 time: null
@@ -13,7 +13,7 @@ cache: false
 device: cpu
 workers: 8
 project: runs/office_cls
-name: trial_run_1
+name: trial_run_12
 exist_ok: false
 pretrained: true
 optimizer: auto
@@ -103,4 +103,4 @@ auto_augment: randaugment
 erasing: 0.4
 cfg: null
 tracker: botsort.yaml
-save_dir: /Users/zoulien/Documents/GitHub/office-items-recognition/office-items-prediction/runs/office_cls/trial_run_1
+save_dir: /Users/zoulien/Documents/GitHub/office-items-recognition/office-items-prediction/runs/office_cls/trial_run_12
