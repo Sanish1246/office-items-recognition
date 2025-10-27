@@ -8,7 +8,7 @@ const UploadFile = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const [result, setResult] = useState({ item: "" });
+  const [result, setResult] = useState({ item: "", confidence: 0 });
 
   async function analyzeImg() {
     if (!selectedImage) {
@@ -53,12 +53,12 @@ const UploadFile = () => {
       );
       bestClass = bestClass.charAt(0).toUpperCase() + bestClass.slice(1);
 
-      // let confidence =
-      //   typeof bestProb === "number" ? bestProb : parseFloat(String(bestProb));
-      // if (confidence <= 1) confidence = Math.round(confidence * 100);
-      // else confidence = Math.round(confidence);
+      let confidence =
+        typeof bestProb === "number" ? bestProb : parseFloat(String(bestProb));
+      if (confidence <= 1) confidence = Math.round(confidence * 100);
+      else confidence = Math.round(confidence);
 
-      setResult({ item: bestClass });
+      setResult({ item: bestClass, confidence: Math.round(bestProb * 100) });
       toast.success("Image analyzed successfully!", {
         action: {
           label: "Close",
@@ -77,7 +77,7 @@ const UploadFile = () => {
           },
         },
       });
-      setResult({ item: "" });
+      setResult({ item: "", confidence: 0 });
     } finally {
       setIsLoading(false);
     }
@@ -128,7 +128,7 @@ const UploadFile = () => {
         <p className="mt-2">Upload an image to be anlayzed</p>
       ) : (
         <p className="mt-2">
-          <b>Item:</b> {result.item}
+          <b>Item:</b> {result.item} - <b>Confidence:</b> {result.confidence}%
         </p>
       )}
 
@@ -142,7 +142,7 @@ const UploadFile = () => {
               const file = event.currentTarget.files?.[0]; //
               if (file) {
                 setSelectedImage(file);
-                setResult({ item: "" });
+                setResult({ item: "", confidence: 0 });
               }
             }}
             className="

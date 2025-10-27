@@ -92,7 +92,7 @@ const WebcamFeed = () => {
         <p>Waiting for objects...</p>
       ) : (
         <p>
-          <b>Item:</b> {result.item}
+          <b>Item:</b> {result.item} - <b>Confidence:</b> {result.confidence}%
         </p>
       )}
       <Button
