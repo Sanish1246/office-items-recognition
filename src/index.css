@@ -1,6 +1,43 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* Retro palette + helpers added to top */
+:root {
+  /* Palette from the poster */
+  --teal: #3E6868;
+  --red: #C94E44;
+  --tan: #C1AB85;
+  --black-bg: #1A1A1A;
+  --dark-accent: #3D413A;
+  --cream: #FBFBFA;
+}
+
+/* small helpers so components can use semantic classnames */
+.bg-teal { background-color: var(--teal); }
+.bg-red { background-color: var(--red); }
+.bg-tan { background-color: var(--tan); }
+.bg-blackbg { background-color: var(--black-bg); }
+.bg-darkaccent { background-color: var(--dark-accent); }
+.text-cream { color: var(--cream); }
+.text-teal { color: var(--teal); }
+.text-red { color: var(--red); }
+.ring-teal { box-shadow: 0 0 0 4px rgba(62,104,104,0.12); }
+
+/* poster-like frame */
+.poster-frame {
+  background: linear-gradient(180deg, rgba(0,0,0,0.12), rgba(0,0,0,0.06));
+  border: 6px solid rgba(193,171,133,0.7); /* tan border */
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+  border-radius: 8px;
+}
+
+/* Make the spinner match the palette */
+.three-body { --uib-color: var(--teal); }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -110,11 +147,10 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
-/* Styling for the spinner */
+/* Styling for the spinner (unchanged structure, color uses var) */
 .three-body {
   --uib-size: 35px;
   --uib-speed: 0.8s;
-  --uib-color: #5d3fd3;
   position: relative;
   display: inline-block;
   height: var(--uib-size);
@@ -222,6 +258,6 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-[url('office-bg.gif')] bg-fixed bg-cover bg-center bg-no-repeat text-foreground;
+    @apply bg-[url('../public/office-bg.gif')] bg-fixed bg-cover bg-center bg-no-repeat text-foreground;
   }
 }

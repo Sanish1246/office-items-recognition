@@ -1,11 +1,13 @@
+import React from "react";
 import { useTheme } from "next-themes";
-import { Toaster as Sonner, type ToasterProps } from "sonner";
+import { Toaster as SonnerToaster, type ToasterProps } from "sonner";
 
-const Toaster = ({ ...props }: ToasterProps) => {
+// Export a single Toaster wrapper (no duplicate declarations)
+export const Toaster = (props?: ToasterProps) => {
   const { theme = "system" } = useTheme();
 
   return (
-    <Sonner
+    <SonnerToaster
       theme={theme as ToasterProps["theme"]}
       className="toaster group"
       style={
@@ -15,9 +17,11 @@ const Toaster = ({ ...props }: ToasterProps) => {
           "--normal-border": "var(--border)",
         } as React.CSSProperties
       }
+      position="bottom-center"
+      richColors
       {...props}
     />
   );
 };
 
-export { Toaster };
+export default Toaster;
