@@ -1,17 +1,17 @@
 task: classify
 mode: train
 model: yolo11s-cls.pt
-data: Updated Dataset/
+data: Dataset
 epochs: 150
 time: null
 patience: 100
-batch: 64
+batch: 16
 imgsz: 320
 save: true
 save_period: -1
 cache: false
 device: null
-workers: 16
+workers: 8
 project: null
 name: train
 exist_ok: false
@@ -103,4 +103,4 @@ auto_augment: randaugment
 erasing: 0.4
 cfg: null
 tracker: botsort.yaml
-save_dir: /home/skillnoob/Desktop/ultralytics/runs/classify/train
+save_dir: /content/runs/classify/train
