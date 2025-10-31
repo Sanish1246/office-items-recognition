@@ -34,9 +34,9 @@ Then, run the following command to install all the dependencies for the front-en
 npm install
 ```
 
-### Using the item classification model
+## Using the item classification model
 
-## Starting the application
+### Starting the application
 
 Move to the office-items-classification folder
 
@@ -62,7 +62,7 @@ Now, open another another terminal and type the following command to start the V
 npm run dev
 ```
 
-## Accessing the application
+### Accessing the application
 
 If everything has been done correctly, the application should be available at this url
 
@@ -93,3 +93,5 @@ If everything has been done correctly, the application should be available at th
 ```
 http://localhost:5174/yolov11-tfjs/
 ```
+
+# Example output
