@@ -1,3 +1,13 @@
+# Getting started
+
+## Clone the repo
+
+Clone the project repo by running the following command in your terminal
+
+```
+git clone https://github.com/Sanish1246/office-items-recognition.git
+```
+
 ## Installing dependencies
 
 In order to install all dependencies for the models, run the following command:
