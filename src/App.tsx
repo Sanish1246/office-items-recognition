@@ -10,7 +10,7 @@ type Detection = { item: string; confidence: number };
 function App() {
   const [choice, setChoice] = useState("Upload");
 
-  // Keep a short history of recent detections (placeholders initially)
+  // Keep a short history of recent detections
   const [detections, setDetections] = useState<Detection[]>(() =>
     Array.from({ length: 3 }, () => ({ item: "—", confidence: 0 }))
   );
@@ -19,7 +19,6 @@ function App() {
     setDetections((prev) => [d, ...prev].slice(0, 3));
   };
 
-  // Palette array used for colored avatars (teal, red, tan, dark-accent)
   const palette = [
     "var(--teal)",
     "var(--red)",
@@ -92,7 +91,6 @@ function App() {
               <div className="mt-3 grid gap-3">
                 {detections.map((d, i) => {
                   const avatarBg = palette[i % palette.length];
-                  // determine readable text color for avatar: tan -> darkaccent, otherwise cream
                   const avatarTextClass =
                     avatarBg === "var(--tan)"
                       ? "text-darkaccent"

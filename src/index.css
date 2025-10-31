@@ -1,9 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-/* Retro palette + helpers added to top */
 :root {
-  /* Palette from the poster */
   --teal: #3E6868;
   --red: #C94E44;
   --tan: #C1AB85;

@@ -1,4 +1,5 @@
-import { useRef, useState } from "react";
+// src/components/WebcamFeed.tsx
+import { useRef, useState, useEffect } from "react";
 import { Button } from "./ui/button";
 import { toast } from "sonner";
 import { Camera } from "lucide-react";
@@ -86,16 +87,17 @@ const WebcamFeed = ({ onDetect }: Props) => {
   function start() {
     if (!navigator.mediaDevices) return;
     navigator.mediaDevices
-      .getUserMedia({ video: true })
-      .then((stream) => {
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream;
-          videoRef.current.play();
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+        .getUserMedia({ video: true })
+        .then((stream) => {
+          if (videoRef.current) {
+            videoRef.current.srcObject = stream;
+            videoRef.current.play().catch(() => {});
+          }
+        })
+        .catch((err) => {
+          console.error("Camera start failed:", err);
+          toast.error("Unable to access camera");
+        });
   }
 
   function stop() {
@@ -105,42 +107,56 @@ const WebcamFeed = ({ onDetect }: Props) => {
     videoRef.current.srcObject = null;
   }
 
+  // Auto-start when component mounts
+  // and stop when it unmounts / user switches away.
+  useEffect(() => {
+    start();
+    return () => {
+      stop();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
-    <div className="poster-frame p-4 rounded-md">
-      <div className="bg-darkaccent h-96 rounded-md overflow-hidden flex items-center justify-center">
-        <video
-          ref={videoRef}
-          className="w-full h-full object-cover"
-          autoPlay
-          muted
-        />
+      <div className="poster-frame p-4 rounded-md">
+        <div className="bg-darkaccent h-96 rounded-md overflow-hidden flex items-center justify-center">
+          <video
+              ref={videoRef}
+              className="w-full h-full object-cover"
+              autoPlay
+              muted
+          />
+        </div>
+        <div className="mt-4 flex gap-4">
+          <Button
+              onClick={() => {
+                analyzeFrame();
+              }}
+              className="bg-teal text-cream"
+              disabled={isAnalyzing}
+          >
+            <Camera />
+            Capture
+          </Button>
+          <Button
+              onClick={() => {
+                stop();
+              }}
+              className="bg-red text-black"
+          >
+            Stop
+          </Button>
+        </div>
+        {isAnalyzing ? (
+            <p className="text-cream mt-2">Analyzing frame...</p>
+        ) : result.item === "" ? (
+            <p className="text-cream mt-2">Waiting for objects...</p>
+        ) : (
+            <p className="text-cream mt-2">
+              <b>Item:</b> {result.item} - <b>Confidence:</b> {result.confidence}%
+            </p>
+        )}
       </div>
-      <div className="mt-4 flex gap-4">
-        <Button
-          onClick={() => {
-            start();
-            // capture one frame after starting a bit later to allow camera warm-up
-            setTimeout(() => analyzeFrame(), 600);
-          }}
-          className="bg-teal text-cream"
-        >
-          <Camera />
-          Capture
-        </Button>
-        <Button onClick={stop} className="bg-red text-black">
-          Stop
-        </Button>
-      </div>
-      {isAnalyzing ? (
-        <p className="text-cream mt-2">Analyzing frame...</p>
-      ) : result.item === "" ? (
-        <p className="text-cream mt-2">Waiting for objects...</p>
-      ) : (
-        <p className="text-cream mt-2">
-          <b>Item:</b> {result.item} - <b>Confidence:</b> {result.confidence}%
-        </p>
-      )}
-    </div>
   );
 };
 
