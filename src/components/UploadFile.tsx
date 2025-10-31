@@ -3,11 +3,15 @@ import { Button } from "./ui/button";
 import { BrainCircuit } from "lucide-react";
 import { toast } from "sonner";
 
-const UploadFile = () => {
+type Detection = { item: string; confidence: number };
+
+interface Props {
+  onDetect?: (d: Detection) => void;
+}
+
+const UploadFile = ({ onDetect }: Props) => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
-
   const [isLoading, setIsLoading] = useState(false);
-
   const [result, setResult] = useState({ item: "", confidence: 0 });
 
   async function analyzeImg() {
@@ -48,17 +52,18 @@ const UploadFile = () => {
 
       // Using the class with max prob as the identified class
       const entries = Object.entries(firstResult) as [string, number][];
-      let [bestClass, bestProb] = entries.reduce((a, b) =>
+      const [bestClass, bestProb] = entries.reduce((a, b) =>
         a[1] > b[1] ? a : b
       );
-      bestClass = bestClass.charAt(0).toUpperCase() + bestClass.slice(1);
+      const prettyClass = bestClass.charAt(0).toUpperCase() + bestClass.slice(1);
 
-      let confidence =
-        typeof bestProb === "number" ? bestProb : parseFloat(String(bestProb));
-      if (confidence <= 1) confidence = Math.round(confidence * 100);
-      else confidence = Math.round(confidence);
+      const confidence = Math.round(bestProb * 100);
 
-      setResult({ item: bestClass, confidence: Math.round(bestProb * 100) });
+      setResult({ item: prettyClass, confidence });
+
+      // Notify parent about new detection
+      if (onDetect) onDetect({ item: prettyClass, confidence });
+
       toast.success("Image analyzed successfully!", {
         action: {
           label: "Close",
@@ -82,12 +87,13 @@ const UploadFile = () => {
       setIsLoading(false);
     }
   }
+
   return (
     <div className="mt-5">
-      <div className="border-1 h-108 w-200 border-indigo-700 mx-auto items-center">
+      <div className="poster-frame h-96 w-full mx-auto items-center overflow-hidden">
         {selectedImage ? (
           isLoading ? (
-            <div className="flex-center items-center justify-center  h-full w-full overflow-hidden bg-violet-50">
+            <div className="flex items-center justify-center h-full w-full overflow-hidden bg-darkaccent">
               <div className="three-body">
                 <div className="three-body__dot" />
                 <div className="three-body__dot" />
@@ -97,17 +103,18 @@ const UploadFile = () => {
           ) : (
             <img
               src={URL.createObjectURL(selectedImage)}
-              className="h-108 w-full object-contain"
+              alt="Selected upload"
+              className="h-96 w-full object-contain"
             />
           )
         ) : (
           <div
             role="status"
-            className="h-full w-full rtl:space-x-reverse md:flex md:items-center"
+            className="h-full w-full md:flex md:items-center"
           >
-            <div className="flex  items-center justify-center w-full h-full bg-gray-300 dark:bg-gray-700 flex-1">
+            <div className="flex items-center justify-center w-full h-full bg-darkaccent flex-1">
               <svg
-                className="w-10 h-10 text-gray-200 dark:text-gray-600"
+                className="w-16 h-16 text-cream"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="currentColor"
@@ -123,48 +130,48 @@ const UploadFile = () => {
       </div>
 
       {isLoading ? (
-        <p className="mt-2">Analysis in progress...</p>
+        <p className="mt-2 text-cream">Analysis in progress...</p>
       ) : result.item === "" ? (
-        <p className="mt-2">Upload an image to be anlayzed</p>
+        <p className="mt-2 text-cream">Upload an image to be analyzed</p>
       ) : (
-        <p className="mt-2">
+        <p className="mt-2 text-cream">
           <b>Item:</b> {result.item} - <b>Confidence:</b> {result.confidence}%
         </p>
       )}
 
-      <div className="flex flex-row mt-3 justify-center items-center gap-3">
-        <label>
-          <input
-            type="file"
-            name="office-image"
-            accept="image/*"
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              const file = event.currentTarget.files?.[0]; //
-              if (file) {
-                setSelectedImage(file);
-                setResult({ item: "", confidence: 0 });
+      <div className="mt-4 p-4 rounded-md bg-tan/8 border border-cream/8 flex flex-col md:flex-row items-center gap-3">
+        <div className="flex-1 w-full md:w-auto">
+          <label className="w-full block">
+            <div className="text-xs text-cream/80 mb-2">Choose image</div>
+            <input
+              type="file"
+              name="office-image"
+              accept="image/*"
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                const file = event.currentTarget.files?.[0]; //
+                if (file) {
+                  setSelectedImage(file);
+                  setResult({ item: "", confidence: 0 });
+                }
+              }}
+              className={
+                "w-full md:w-64 p-2 rounded-lg cursor-pointer border border-cream/12 bg-blackbg/10 text-cream placeholder:text-cream/60 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-tan file:text-darkaccent hover:file:bg-tan/90 focus:ring-2 focus:ring-teal"
               }
+            />
+          </label>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <Button
+            onClick={() => {
+              analyzeImg();
             }}
-            className="
-   p-2 border border-gray-300 rounded-lg cursor-pointer
-    file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0
-    file:text-sm file:font-semibold
-    file:bg-blue-50 file:text-indigo-700 hover:file:bg-blue-100
-    dark:text-[#f3f4f6] dark:bg-[#18181b] dark:border-[#334155]
-    dark:file:bg-[#23272f] dark:file:text-[#a78bfa] dark:hover:file:bg-[#334155]
-    mx-auto
-  "
-          />
-        </label>
-        <Button
-          onClick={() => {
-            console.log("button clicked");
-            analyzeImg();
-          }}
-        >
-          <BrainCircuit />
-          Classify
-        </Button>
+            className="bg-red text-black font-semibold px-4 py-2 hover:brightness-95 ring-teal"
+          >
+            <BrainCircuit />
+            Classify
+          </Button>
+        </div>
       </div>
     </div>
   );
