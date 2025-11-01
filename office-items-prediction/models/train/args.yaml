@@ -1,7 +1,7 @@
 task: classify
 mode: train
 model: yolo11s-cls.pt
-data: FinalUpdatedDataset
+data: FinalizedDataset
 epochs: 150
 time: null
 patience: 100
