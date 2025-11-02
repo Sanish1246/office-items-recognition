@@ -55,7 +55,8 @@ const UploadFile = ({ onDetect }: Props) => {
       const [bestClass, bestProb] = entries.reduce((a, b) =>
         a[1] > b[1] ? a : b
       );
-      const prettyClass = bestClass.charAt(0).toUpperCase() + bestClass.slice(1);
+      const prettyClass =
+        bestClass.charAt(0).toUpperCase() + bestClass.slice(1);
 
       const confidence = Math.round(bestProb * 100);
 
@@ -108,10 +109,7 @@ const UploadFile = ({ onDetect }: Props) => {
             />
           )
         ) : (
-          <div
-            role="status"
-            className="h-full w-full md:flex md:items-center"
-          >
+          <div role="status" className="h-full w-full md:flex md:items-center">
             <div className="flex items-center justify-center w-full h-full bg-darkaccent flex-1">
               <svg
                 className="w-16 h-16 text-cream"

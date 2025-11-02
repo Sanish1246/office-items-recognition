@@ -95,3 +95,12 @@ http://localhost:5174/yolov11-tfjs/
 ```
 
 # Example output
+
+File Upload example output
+![File upload](https://github.com/Sanish1246/office-items-recognition/blob/main/uploadOutput.png)
+
+Webcam photo example output
+![Webcam photo](https://github.com/Sanish1246/office-items-recognition/blob/main/webcamOutput.png)
+
+Object detection example output
+![object detection](https://github.com/Sanish1246/office-items-recognition/blob/main/detectionOutput.png)

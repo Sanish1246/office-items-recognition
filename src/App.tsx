@@ -35,9 +35,7 @@ function App() {
               01
             </div>
             <div>
-              <h1 className="text-xl font-extrabold text-cream">
-                Office Items Recognition
-              </h1>
+              <h1 className="text-xl font-extrabold text-cream">OfficeView</h1>
               <p className="text-sm text-cream/85">
                 Upload or capture an image to classify office items.
               </p>
@@ -78,7 +76,9 @@ function App() {
 
           <aside className="w-full md:w-64">
             <div className="poster-frame p-6">
-              <h3 className="text-lg font-semibold text-cream">Last Detected Items</h3>
+              <h3 className="text-lg font-semibold text-cream">
+                Last Detected Items
+              </h3>
 
               {/* Column headers (Item | Confidence) */}
               <div className="mt-4 grid grid-cols-2 items-center gap-2 pb-2 border-b border-cream/8">

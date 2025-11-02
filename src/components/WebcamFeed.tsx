@@ -57,15 +57,18 @@ const WebcamFeed = ({ onDetect }: Props) => {
       }
 
       const entries = Object.entries(firstResult) as [string, number][];
-      const [bestClass, bestProb] = entries.reduce((a, b) => (a[1] > b[1] ? a : b));
-      const prettyClass = bestClass.charAt(0).toUpperCase() + bestClass.slice(1);
+      const [bestClass, bestProb] = entries.reduce((a, b) =>
+        a[1] > b[1] ? a : b
+      );
+      const prettyClass =
+        bestClass.charAt(0).toUpperCase() + bestClass.slice(1);
 
       const confidence = Math.round(bestProb * 100);
       setResult({ item: prettyClass, confidence: confidence });
 
       if (onDetect) onDetect({ item: prettyClass, confidence });
 
-      toast.success("Object detected!", {
+      toast.success("Object classified!", {
         action: {
           label: "Close",
           onClick: () => toast.dismiss(),
@@ -87,22 +90,23 @@ const WebcamFeed = ({ onDetect }: Props) => {
   function start() {
     if (!navigator.mediaDevices) return;
     navigator.mediaDevices
-        .getUserMedia({ video: true })
-        .then((stream) => {
-          if (videoRef.current) {
-            videoRef.current.srcObject = stream;
-            videoRef.current.play().catch(() => {});
-          }
-        })
-        .catch((err) => {
-          console.error("Camera start failed:", err);
-          toast.error("Unable to access camera");
-        });
+      .getUserMedia({ video: true })
+      .then((stream) => {
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+          videoRef.current.play().catch(() => {});
+        }
+      })
+      .catch((err) => {
+        console.error("Camera start failed:", err);
+        toast.error("Unable to access camera");
+      });
   }
 
   function stop() {
     if (!videoRef.current) return;
-    const tracks = (videoRef.current.srcObject as MediaStream)?.getTracks() || [];
+    const tracks =
+      (videoRef.current.srcObject as MediaStream)?.getTracks() || [];
     tracks.forEach((t) => t.stop());
     videoRef.current.srcObject = null;
   }
@@ -118,45 +122,45 @@ const WebcamFeed = ({ onDetect }: Props) => {
   }, []);
 
   return (
-      <div className="poster-frame p-4 rounded-md">
-        <div className="bg-darkaccent h-96 rounded-md overflow-hidden flex items-center justify-center">
-          <video
-              ref={videoRef}
-              className="w-full h-full object-cover"
-              autoPlay
-              muted
-          />
-        </div>
-        <div className="mt-4 flex gap-4">
-          <Button
-              onClick={() => {
-                analyzeFrame();
-              }}
-              className="bg-teal text-cream"
-              disabled={isAnalyzing}
-          >
-            <Camera />
-            Capture
-          </Button>
-          <Button
-              onClick={() => {
-                stop();
-              }}
-              className="bg-red text-black"
-          >
-            Stop
-          </Button>
-        </div>
-        {isAnalyzing ? (
-            <p className="text-cream mt-2">Analyzing frame...</p>
-        ) : result.item === "" ? (
-            <p className="text-cream mt-2">Waiting for objects...</p>
-        ) : (
-            <p className="text-cream mt-2">
-              <b>Item:</b> {result.item} - <b>Confidence:</b> {result.confidence}%
-            </p>
-        )}
+    <div className="poster-frame p-4 rounded-md">
+      <div className="bg-darkaccent h-96 rounded-md overflow-hidden flex items-center justify-center">
+        <video
+          ref={videoRef}
+          className="w-full h-full object-cover"
+          autoPlay
+          muted
+        />
       </div>
+      <div className="mt-4 flex gap-4">
+        <Button
+          onClick={() => {
+            analyzeFrame();
+          }}
+          className="bg-teal text-cream"
+          disabled={isAnalyzing}
+        >
+          <Camera />
+          Capture
+        </Button>
+        <Button
+          onClick={() => {
+            stop();
+          }}
+          className="bg-red text-black"
+        >
+          Stop
+        </Button>
+      </div>
+      {isAnalyzing ? (
+        <p className="text-cream mt-2">Analyzing frame...</p>
+      ) : result.item === "" ? (
+        <p className="text-cream mt-2">Waiting for objects...</p>
+      ) : (
+        <p className="text-cream mt-2">
+          <b>Item:</b> {result.item} - <b>Confidence:</b> {result.confidence}%
+        </p>
+      )}
+    </div>
   );
 };
 

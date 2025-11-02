@@ -49,7 +49,7 @@ const App = () => {
       {loading.loading && <Loader progress={loading.progress} />}
 
       <div className="header">
-        <h1>📷 YOLOv11s Object Detection</h1>
+        <h1>📷Object Detection</h1>
         <p>
           Real-time object detection powered by <code>tensorflow.js</code>
         </p>
