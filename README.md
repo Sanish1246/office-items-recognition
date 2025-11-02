@@ -62,7 +62,7 @@ You can switch between 3 different interfaces, 2 for object classification (uplo
 
 ## File upload
 
-On the file upload interface, you can click on "Select file" to upload and image and then click on "Analyze" to classify it
+On the file upload interface, you can click on "Select file" to upload and image and then click on "Classify" to classify it
 After a brief delay, the image will be classified, and the identified class and confidence level will be displayed
 
 ## Webcam input
