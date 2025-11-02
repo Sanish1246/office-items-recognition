@@ -2,21 +2,26 @@
 
 ## Clone the repo
 
-Clone the project repo by running the following command in your terminal
+Clone the project repo in a folder of your choice by running the following command in your terminal
 
 ```
 git clone https://github.com/Sanish1246/office-items-recognition.git
 ```
 
 ## Installing dependencies
+Navigate to the cloned office-items-recognition folder
+
+```
+cd office-items-recognition
+```
 
 In order to install all dependencies for the model, run the following command:
 
 ```
-pip install -r ./office-items-classification/requirements.txt
+pip install -r ./office-items-prediction/requirements.txt
 ```
 
-Then, run the following command to install all the dependencies for the front-end
+Then, run the following command to install all the dependencies for the front-end (assuming that you are still on the office-items-recognition folder, else navigate there and then run the command)
 
 ```
 npm install
@@ -24,10 +29,10 @@ npm install
 
 ## Starting the application
 
-Move to the office-items-classification folder
+Move to the office-items-prediction folder (assuming that you are still on the office-items-recognition folder, else navigate there and then run the command)
 
 ```
-cd office-items-classification
+cd office-items-prediction
 ```
 
 Then, run the following command to start the Python server to use the model:
@@ -42,7 +47,7 @@ Wait until you get this message in the terminal
   INFO   Application startup complete.
 ```
 
-Now, open another another terminal and type the following command to start the Vite server for the front end
+Now, open another another terminal, navigate to the office-items-recognition folder and type the following command to start the Vite server for the front end
 
 ```
 npm run dev
