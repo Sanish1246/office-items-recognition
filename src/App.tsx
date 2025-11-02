@@ -77,7 +77,7 @@ function App() {
           <aside className="w-full md:w-64">
             <div className="poster-frame p-6">
               <h3 className="text-lg font-semibold text-cream">
-                Last Detected Items
+                Last Classified Items
               </h3>
 
               {/* Column headers (Item | Confidence) */}
