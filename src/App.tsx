@@ -1,13 +1,17 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Upload, Camera } from "lucide-react";
+import { Upload, Camera, ArrowRight } from "lucide-react";
 import Toaster from "@/components/ui/sonner";
 import UploadFile from "./components/UploadFile";
 import WebcamFeed from "./components/WebcamFeed";
+import Detector from "./Detector";
 
 type Detection = { item: string; confidence: number };
 
 function App() {
+  const [currentPage, setCurrentPage] = useState<
+    "classification" | "detection"
+  >("classification");
   const [choice, setChoice] = useState("Upload");
 
   // Keep a short history of recent detections
@@ -26,6 +30,12 @@ function App() {
     "var(--dark-accent)",
   ];
 
+  // Show Detector Page
+  if (currentPage === "detection") {
+    return <Detector onBack={() => setCurrentPage("classification")} />;
+  }
+
+  // Show Classification Page
   return (
     <div className="min-h-screen bg-blackbg text-cream flex flex-col">
       <header className="bg-teal">
@@ -65,6 +75,15 @@ function App() {
                 <Camera />
                 Webcam
               </Button>
+
+              {/* Button to go to Detector page */}
+              <Button
+                variant="default"
+                onClick={() => setCurrentPage("detection")}
+              >
+                <ArrowRight />
+                Go to Detector
+              </Button>
             </div>
 
             <div>
@@ -78,7 +97,9 @@ function App() {
 
           <aside className="w-full md:w-64">
             <div className="poster-frame p-6">
-              <h3 className="text-lg font-semibold text-cream">Last Detected Items</h3>
+              <h3 className="text-lg font-semibold text-cream">
+                Last Detected Items
+              </h3>
 
               {/* Column headers (Item | Confidence) */}
               <div className="mt-4 grid grid-cols-2 items-center gap-2 pb-2 border-b border-cream/8">

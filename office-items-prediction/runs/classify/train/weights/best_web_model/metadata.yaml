@@ -1,0 +1,25 @@
+description: Ultralytics YOLO11s-cls model trained on FinalizedDataset
+author: Ultralytics
+date: '2025-11-01T13:28:21.481301'
+version: 8.3.223
+license: AGPL-3.0 License (https://ultralytics.com/license)
+docs: https://docs.ultralytics.com
+stride: 1
+task: classify
+batch: 1
+imgsz:
+- 320
+- 320
+names:
+  0: binder
+  1: file
+  2: headphone
+  3: mouse
+  4: mug
+  5: pen
+args:
+  batch: 1
+  half: false
+  int8: false
+  nms: false
+channels: 3
