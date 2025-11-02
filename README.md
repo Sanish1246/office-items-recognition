@@ -62,12 +62,12 @@ You can switch between 3 different interfaces, 2 for object classification (uplo
 
 ## File upload
 
-On the file upload interface, you can click on "Select file" to upload and image and then click on "Classify" to classify it
+On the file upload interface, you can click on "Choose file" to upload and image and then click on "Classify" to classify it
 After a brief delay, the image will be classified, and the identified class and confidence level will be displayed
 
 ## Webcam input
 
-On the webcam input interface, you can click on "Caputure" to capture a screenshot from your frontal camera.
+On the webcam input interface, you can click on "Capture" to capture a screenshot from your frontal camera.
 The screenshot will then be classified by the model, and the identified class and confidence level will be displayed
 
 ## Object detection
