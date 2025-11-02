@@ -10,7 +10,7 @@ git clone https://github.com/Sanish1246/office-items-recognition.git
 
 ## Installing dependencies
 
-In order to install all dependencies for the models, run the following command:
+In order to install all dependencies for the model, run the following command:
 
 ```
 pip install -r ./office-items-classification/requirements.txt
@@ -22,21 +22,7 @@ Then, run the following command to install all the dependencies for the front-en
 npm install
 ```
 
-If you also want to use the object detection model, move to its project folder
-
-```
-cd ./office-items-classification/yolov11-tfjs
-```
-
-Then, run the following command to install all the dependencies for the front-end
-
-```
-npm install
-```
-
-## Using the item classification model
-
-### Starting the application
+## Starting the application
 
 Move to the office-items-classification folder
 
@@ -62,7 +48,7 @@ Now, open another another terminal and type the following command to start the V
 npm run dev
 ```
 
-### Accessing the application
+## Accessing the application
 
 If everything has been done correctly, the application should be available at this url
 
@@ -70,29 +56,25 @@ If everything has been done correctly, the application should be available at th
 http://localhost:5173/
 ```
 
-## Using the item detection model
+# How to use
 
-### Starting the application
+You can switch between 3 different interfaces, 2 for object classification (upload & webcam input) and 1 for object detection
 
-Open a new terminal if needed and move to the yolov11-tfjs folder
+## File upload
 
-```
-cd ./office-items-classification/yolov11-tfjs
-```
+On the file upload interface, you can click on "Select file" to upload and image and then click on "Analyze" to classify it
+After a brief delay, the image will be classified, and the identified class and confidence level will be displayed
 
-Then, run the following command to start the application:
+## Webcam input
 
-```
-npm start
-```
+On the webcam input interface, you can click on "Caputure" to capture a screenshot from your frontal camera.
+The screenshot will then be classified by the model, and the identified class and confidence level will be displayed
 
-### Accessing the application
+## Object detection
 
-If everything has been done correctly, the application should be available at this url
-
-```
-http://localhost:5174/yolov11-tfjs/
-```
+On the object detection interface, you will first need to wait for the model to load (this may take a while).
+Then, you can press on the "Start Webcam" button to open your frontal webcam.
+The model will then draw a bounding box around each item it detects, outuptting the class and its confidence level
 
 # Example output
 
